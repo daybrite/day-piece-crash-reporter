@@ -44,7 +44,8 @@ use std::sync::atomic::{AtomicBool, AtomicIsize, AtomicU32, AtomicU64, AtomicUsi
 struct ExceptionRecord {
     exception_code: u32,
     exception_flags: u32,
-    exception_record: *mut ExceptionRecord,
+    /// Win32 names this `ExceptionRecord`: the next record of a nested exception.
+    nested: *mut ExceptionRecord,
     exception_address: *mut core::ffi::c_void,
     number_parameters: u32,
     exception_information: [usize; 15],
