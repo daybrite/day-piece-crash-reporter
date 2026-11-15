@@ -23,6 +23,8 @@ ui = ["dep:day-pieces", "dep:day-localization-ui", "dep:day-build"]
 [dependencies]
 day-core = "0.*"
 day-reactive = "0.*"
+# `storage::data_dir_for`: where the reports are kept.
+day-process = "0.*"
 # `Lifecycle` (the WillLaunch/WillTerminate phases the sentinel hooks); a leaf crate day-core
 # already pulls in, so naming it directly adds no compiled crate.
 day-spec = "0.*"

@@ -29,7 +29,7 @@ use std::path::{Path, PathBuf};
 use crate::report::{Fields, Kind, Report, SignalInfo, parse_kv};
 
 /// The resolved crash-report directory for `app_id`, honoring an explicit override: `day-break`
-/// in that app's data directory (`day_spec::storage::data_dir_for`), which is a folder named for
+/// in that app's data directory (`day_process::storage::data_dir_for`), which is a folder named for
 /// the app in the platform's place for app data on desktops and iOS, and the app's own sandbox on
 /// Android and HarmonyOS. The same layout a day-lite superapp host uses for its package store,
 /// and where `day launch`'s crash diagnosis looks.
@@ -45,7 +45,7 @@ pub fn store_dir(app_id: &str, override_dir: Option<&Path>) -> PathBuf {
         return base.join("day-break");
     }
 
-    let base = day_spec::storage::data_dir_for(app_id);
+    let base = day_process::storage::data_dir_for(app_id);
     // A HarmonyOS host that passed no directory: the ability's fixed sandbox path.
     #[cfg(all(target_os = "linux", target_env = "ohos"))]
     let base = base.or_else(|| Some(PathBuf::from("/data/storage/el2/base/haps/entry/files")));
