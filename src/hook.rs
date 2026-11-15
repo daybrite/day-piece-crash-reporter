@@ -54,8 +54,7 @@ fn record(info: &std::panic::PanicHookInfo<'_>) {
 
     let location = info
         .location()
-        .map(|l| format!("{}:{}:{}", l.file(), l.line(), l.column()))
-        .unwrap_or_default();
+        .map_or_default(|l| format!("{}:{}:{}", l.file(), l.line(), l.column()));
     let thread = std::thread::current()
         .name()
         .unwrap_or("unnamed")

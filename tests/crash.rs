@@ -144,8 +144,9 @@ fn segv_child_produces_fatal_signal_report() {
     let d = Scratch::new("segv");
     let out = run_child("segv", &d.0);
     let sig = out.status.signal();
-    assert!(
-        matches!(sig, Some(libc::SIGSEGV | libc::SIGBUS)),
+    std::assert_matches!(
+        sig,
+        Some(libc::SIGSEGV | libc::SIGBUS),
         "expected SIGSEGV/SIGBUS, got {sig:?}"
     );
     let (kind, json) = reconcile(&d.0);

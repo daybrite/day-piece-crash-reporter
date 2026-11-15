@@ -369,10 +369,7 @@ pub fn reports_dir() -> Option<PathBuf> {
 
 /// Paths of finalized reports, newest-first.
 pub fn report_paths() -> Vec<PathBuf> {
-    STATE
-        .get()
-        .map(|s| store::report_paths(&s.dir))
-        .unwrap_or_default()
+    STATE.get().map_or_default(|s| store::report_paths(&s.dir))
 }
 
 /// Load a finalized report file into a [`Report`] (parsing the JSON we wrote).
@@ -454,9 +451,7 @@ pub fn reporter_description() -> Option<String> {
 /// The full, human-readable text of a report: the disclosure surface's content. This is exactly
 /// what a transport uploads (the JSON is a machine mirror of the same facts).
 pub fn report_text(meta: &ReportMeta) -> String {
-    load_report(&meta.path)
-        .map(|r| r.display_text())
-        .unwrap_or_default()
+    load_report(&meta.path).map_or_default(|r| r.display_text())
 }
 
 /// The full text of the newest finalized report, if any.
@@ -562,7 +557,7 @@ impl State {
         }
     }
     fn on_crash_snapshot(&self) -> Vec<fn(&CrashInfo)> {
-        self.on_crash.lock().map(|v| v.clone()).unwrap_or_default()
+        self.on_crash.lock().map_or_default(|v| v.clone())
     }
 }
 
@@ -655,9 +650,9 @@ mod tests {
         // armed store holds no reports, and the call proves it copes with an empty one.
         assert_eq!(store::report_paths(&s.dir), [] as [std::path::PathBuf; 0]);
         // Second init is rejected.
-        assert!(matches!(
+        std::assert_matches!(
             Config::new().dir(&d).init(),
             Err(InitError::AlreadyInitialized)
-        ));
+        );
     }
 }

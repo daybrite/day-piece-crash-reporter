@@ -2,7 +2,7 @@
 name = "day-piece-crash-reporter"
 version = "0.2.0"
 edition = "2024"
-rust-version = "1.89"
+rust-version = "1.100"
 description = "Crash capture, local reports, and opt-in delivery for Day apps"
 repository = "https://github.com/daybrite/day-piece-crash-reporter"
 license = "MPL-2.0"
